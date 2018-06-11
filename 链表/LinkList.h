@@ -64,8 +64,15 @@ Status appendData(LinkList *L, ElemType data);
 /**
  *L:链表头指针
  index:指定删除的下标
- data:删除的结点的值
+ *data:删除的结点的值
  */
 //删除某一结点
 Status  deleteNode(LinkList *L, int index, ElemType *data);
+/**
+ *L:链表头指针
+ index:指定修改的下标
+ data:要插入的新值
+ */
+//修改某一结点的值
+Status   changeData(LinkList *L, int index, ElemType data);
 #endif /* LinkList_h */

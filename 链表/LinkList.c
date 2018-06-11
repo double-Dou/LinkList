@@ -244,3 +244,32 @@ Status  deleteNode(LinkList *L, int index, ElemType *data)
     printf("节点删除成功\n");
     return OK;
 }
+
+Status  changeData(LinkList *L, int index, ElemType data)
+{
+    if ((*L) == NULL) {
+        printf("链表未初始化!\n");
+        return ERROR;
+    }
+    int currentIndex = 1;
+    LinkList p;//声明遍历链表指向当前结点的指针
+    p = (*L)->next;//指向第一个节点
+    if (p == NULL) {
+        printf("链表为空!\n");
+        return ERROR;
+    }
+    if (index < 1) {
+        printf("替换下标不能小于1!\n");
+        return ERROR;
+    }
+    while (p && currentIndex < index) {
+        p = p->next;
+        currentIndex++;
+    }
+    if (p == NULL) {
+        printf("替换下标超出了链表的最大长度!\n");
+        return ERROR;
+    }
+    p->data = data;
+    return OK;
+}
