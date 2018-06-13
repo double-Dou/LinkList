@@ -244,3 +244,31 @@ Status  deleteNode(LinkList *L, int index, ElemType *data)
     printf("节点删除成功\n");
     return OK;
 }
+
+Status reserveLinkList(LinkList *L)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList p, pPro, pNext;
+    p = (*L)->next;
+    pNext = p->next;
+    pPro = NULL;
+    while (pNext != NULL) {
+        p->next = pPro;
+        pPro = p;
+        p = pNext;
+        pNext = pNext->next;
+    }
+    p->next = pPro;
+    pPro = p;
+    (*L)->next = pPro;
+    pPro = p = NULL;
+    
+    return OK;
+}

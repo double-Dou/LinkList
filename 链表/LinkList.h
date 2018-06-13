@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-typedef int Status;             //定义函数返回值类型
+typedef int    Status;             //定义函数返回值类型
 typedef int    ElemType;        //结点数据的数据类型声明
 typedef struct Node *LinkList;
 
@@ -68,4 +68,6 @@ Status appendData(LinkList *L, ElemType data);
  */
 //删除某一结点
 Status  deleteNode(LinkList *L, int index, ElemType *data);
+//翻转链表
+Status reserveLinkList(LinkList *L);
 #endif /* LinkList_h */
