@@ -52,6 +52,10 @@ int main(int argc, const char * argv[]) {
     printLinkList(&list);
     reserveLinkList(&list);
     printLinkList(&list);
+    checkExistLoop(&list);
+    ElemType data;
+    getCountDownK(&list, 2, &data);
+    printf("获取的值 ：%d\n",data);
 //    createLinkLisAtTail(&list, 10);//尾插法
 //    int length = getLinkListLength(&list);//获取链表长度
 //    printf("链表的长度为：%d\n",length);

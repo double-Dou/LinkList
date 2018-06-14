@@ -272,3 +272,56 @@ Status reserveLinkList(LinkList *L)
     
     return OK;
 }
+
+Status checkExistLoop(LinkList *L)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList fast, slow;
+    slow = fast = (*L)->next;
+    while (slow != NULL && fast != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            printf("该链表中有环\n");
+            return OK;
+        }
+    }
+    printf("该链表中没有环\n");
+    return ERROR;
+}
+
+Status getCountDownK(LinkList *L, int k, ElemType *data)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList front, back;
+    int count = 1;
+    front = back = (*L)->next;//指向第一个节点
+    while (front->next != NULL) {
+        count ++;
+        if (count > k) {
+            back = back->next;
+        }
+        front = front->next;
+    }
+    if (k > count) {
+        printf("所求值不在链表范围内\n");
+        return ERROR;
+    }
+    *data = back->data;
+    printf("倒数第%d个结点的值获取成功:%d\n", k, *data);
+    return OK;
+}
