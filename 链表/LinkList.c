@@ -245,31 +245,83 @@ Status  deleteNode(LinkList *L, int index, ElemType *data)
     return OK;
 }
 
-Status  changeData(LinkList *L, int index, ElemType data)
+Status reserveLinkList(LinkList *L)
 {
-    if ((*L) == NULL) {
-        printf("链表未初始化!\n");
+    if (*L == NULL) {
+        printf("链表没有初始化");
         return ERROR;
     }
-    int currentIndex = 1;
-    LinkList p;//声明遍历链表指向当前结点的指针
-    p = (*L)->next;//指向第一个节点
-    if (p == NULL) {
-        printf("链表为空!\n");
+    if ((*L)->next == NULL) {
+        printf("链表为空");
         return ERROR;
     }
-    if (index < 1) {
-        printf("替换下标不能小于1!\n");
+    LinkList p, pPro, pNext;
+    p = (*L)->next;
+    pNext = p->next;
+    pPro = NULL;
+    while (pNext != NULL) {
+        p->next = pPro;
+        pPro = p;
+        p = pNext;
+        pNext = pNext->next;
+    }
+    p->next = pPro;
+    pPro = p;
+    (*L)->next = pPro;
+    pPro = p = NULL;
+    
+    return OK;
+}
+
+Status checkExistLoop(LinkList *L)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
         return ERROR;
     }
-    while (p && currentIndex < index) {
-        p = p->next;
-        currentIndex++;
-    }
-    if (p == NULL) {
-        printf("替换下标超出了链表的最大长度!\n");
+    if ((*L)->next == NULL) {
+        printf("链表为空");
         return ERROR;
     }
-    p->data = data;
+    LinkList fast, slow;
+    slow = fast = (*L)->next;
+    while (slow != NULL && fast != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            printf("该链表中有环\n");
+            return OK;
+        }
+    }
+    printf("该链表中没有环\n");
+    return ERROR;
+}
+
+Status getCountDownK(LinkList *L, int k, ElemType *data)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList front, back;
+    int count = 1;
+    front = back = (*L)->next;//指向第一个节点
+    while (front->next != NULL) {
+        count ++;
+        if (count > k) {
+            back = back->next;
+        }
+        front = front->next;
+    }
+    if (k > count) {
+        printf("所求值不在链表范围内\n");
+        return ERROR;
+    }
+    *data = back->data;
+    printf("倒数第%d个结点的值获取成功:%d\n", k, *data);
     return OK;
 }

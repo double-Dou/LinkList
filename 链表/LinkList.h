@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 
-typedef int Status;             //定义函数返回值类型
+typedef int    Status;             //定义函数返回值类型
 typedef int    ElemType;        //结点数据的数据类型声明
 typedef struct Node *LinkList;
 
@@ -68,11 +68,19 @@ Status appendData(LinkList *L, ElemType data);
  */
 //删除某一结点
 Status  deleteNode(LinkList *L, int index, ElemType *data);
+//翻转链表
+Status reserveLinkList(LinkList *L);
 /**
- *L:链表头指针
- index:指定修改的下标
- data:要插入的新值
+ 思路:使用快慢指针，使快指针每次走两步，慢指针每次走一步，如果两个指针在某个位置相遇，则有环
  */
-//修改某一结点的值
-Status   changeData(LinkList *L, int index, ElemType data);
+//判断链表中是否存在环
+Status checkExistLoop(LinkList *L);
+/**
+ 思路:使用两个指针初始指向第一个节点，假设倒数第K个节点前有m个节点，则倒数第K个节点即是正数第m+1个节点，
+ 则指针要走m步才能指向第m+1个节点，由于链表长度未知，所以m无法确定，所以转换思路，将倒数第K转化为正数第K，
+ 则正数第K个节点后同样有m个节点,所以如此先使一个指针移动到指向正数第K个节点，然后两个指针一起前进，则当前
+ 边的指针走到链表末尾，即指向NULL时，后出发的指针正好指向要找的倒数第K个节点
+ */
+//返回链表中倒数第K个节点的值
+Status getCountDownK(LinkList *L, int k, ElemType *data);
 #endif /* LinkList_h */
