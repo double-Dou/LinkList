@@ -76,6 +76,17 @@ Status reserveLinkList(LinkList *L);
 //判断链表中是否存在环
 Status checkExistLoop(LinkList *L);
 /**
+ 思路:使用快慢指针，使快指针每次走两步，慢指针每次走一步，如果两个指针在某个位置相遇，则有环,
+ 在第一次相遇的时候使快指针返回第一个节点，同时步长变为1，当再次相遇必然是在环入口
+ */
+//判断链表中是否存在环，有环的话找到环的入口
+Status getLoopHead(LinkList *L, LinkList *loopHead);
+/**
+ 思路:使用快慢指针，快指针每次走两步，慢指针每次走一步，待快指针走到尾，慢指针正好走到中间节点
+ */
+//返回链表的中间节点
+Status getMidNode(LinkList *L, ElemType *data);
+/**
  思路:使用两个指针初始指向第一个节点，假设倒数第K个节点前有m个节点，则倒数第K个节点即是正数第m+1个节点，
  则指针要走m步才能指向第m+1个节点，由于链表长度未知，所以m无法确定，所以转换思路，将倒数第K转化为正数第K，
  则正数第K个节点后同样有m个节点,所以如此先使一个指针移动到指向正数第K个节点，然后两个指针一起前进，则当前
@@ -83,4 +94,6 @@ Status checkExistLoop(LinkList *L);
  */
 //返回链表中倒数第K个节点的值
 Status getCountDownK(LinkList *L, int k, ElemType *data);
+//倒序打印整个链表(递归)
+Status printLinkListReserve(LinkList L);
 #endif /* LinkList_h */

@@ -297,6 +297,59 @@ Status checkExistLoop(LinkList *L)
     return ERROR;
 }
 
+Status getLoopHead(LinkList *L, LinkList *loopHead)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList fast, slow;
+    slow = fast = (*L)->next;
+    while (slow != NULL && fast != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            break;
+        }
+    }
+    if (slow != fast) {
+        printf("该链表中没有环\n");
+        return ERROR;
+    }
+    fast = (*L)->next;//快指针回到起点
+    while (fast != slow) {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    *loopHead = fast;
+    return OK;
+}
+
+Status getMidNode(LinkList *L, ElemType *data)
+{
+    if (*L == NULL) {
+        printf("链表没有初始化!\n");
+        return ERROR;
+    }
+    if ((*L)->next == NULL) {
+        printf("链表为空");
+        return ERROR;
+    }
+    LinkList front, back;
+    front = back = (*L)->next;
+    while (front != NULL && front->next != NULL) {
+        front = front->next->next;
+        back = back->next;
+    }
+    *data = back->data;
+    printf("链表中间结点的值获取成功:%d\n", *data);
+    return OK;
+}
+
 Status getCountDownK(LinkList *L, int k, ElemType *data)
 {
     if (*L == NULL) {
@@ -323,5 +376,16 @@ Status getCountDownK(LinkList *L, int k, ElemType *data)
     }
     *data = back->data;
     printf("倒数第%d个结点的值获取成功:%d\n", k, *data);
+    return OK;
+}
+
+Status printLinkListReserve(LinkList head)
+{
+    if (head != NULL) {
+        if (head->next != NULL) {
+            printLinkListReserve(head->next);
+        }
+    }
+    printf("链表倒序输出:%d\n",head->data);
     return OK;
 }
